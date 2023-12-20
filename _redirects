@@ -1,0 +1,2 @@
+/api/geocoding/*  http://pelias.smappen.com:4000/v1/search:splat  200
+/* /index.html  200
