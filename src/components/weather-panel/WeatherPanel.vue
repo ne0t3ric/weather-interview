@@ -18,15 +18,13 @@
         {{ location?.label }}
       </template>
     </v-card-item>
-    <v-list class="bg-transparent">
-      <v-list-item
-          v-for="[day, forecastsOfDay] in forecastsByDay"
-          :key="day"
-          :title="formatDay(day)"
-      >
-        <WeatherTable :forecasts="forecastsOfDay"></WeatherTable>
-      </v-list-item>
-    </v-list>
+    <v-list-item
+        v-for="[day, forecastsOfDay] in forecastsByDay"
+        :key="day"
+    >
+      <span class="day">{{ formatDay(day) }}</span>
+      <WeatherTable :forecasts="forecastsOfDay"></WeatherTable>
+    </v-list-item>
   </v-card>
 </template>
 <script setup lang="ts">
@@ -91,5 +89,14 @@ function formatDay(day: string) {
 <style scoped>
 .panel {
   background-color: rgba(255, 255, 255, 0.15)
+}
+
+.day {
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  line-height: 2rem;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  font-family: "Roboto", sans-serif;
 }
 </style>

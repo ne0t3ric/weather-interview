@@ -1,18 +1,16 @@
 <template>
-  <div class="wrapper" style="min-width: 500px">
-    <v-autocomplete
-        placeholder="Search a location..."
-        :auto-select-first="true"
-        v-model="location"
-        v-model:focused="focus"
-        @update:search="searchLocations"
-        :no-filter="true"
-        :hide-no-data="true"
-        :items="filteredLocations"
-        item-title="label"
-        :return-object="true">
-    </v-autocomplete>
-  </div>
+  <v-autocomplete
+      placeholder="Search a location..."
+      :auto-select-first="true"
+      v-model="location"
+      v-model:focused="focus"
+      @update:search="searchLocations"
+      :no-filter="true"
+      :hide-no-data="true"
+      :items="filteredLocations"
+      item-title="label"
+      :return-object="true">
+  </v-autocomplete>
 </template>
 <script setup lang="ts">
 import {computed, ref, watchEffect} from 'vue'

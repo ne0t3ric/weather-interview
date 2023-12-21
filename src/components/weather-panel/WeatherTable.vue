@@ -57,4 +57,17 @@ td {
   padding: 5px;
   text-align: center;
 }
+
+.temperature, .date {
+  font-size: 0.75rem;
+  line-height: 2rem;
+  letter-spacing: 0.1666666667em;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+}
+
+.date {
+  font-weight: 700;
+  letter-spacing: 0;
+}
 </style>
