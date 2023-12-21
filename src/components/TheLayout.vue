@@ -13,6 +13,7 @@
               xs="12"
               sm="9"
               md="6"
+              class="fill-height"
           >
             <WeatherPanel :location="location"></WeatherPanel>
           </v-col>
