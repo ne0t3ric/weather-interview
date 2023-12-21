@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper" style="min-width: 500px">
     <v-autocomplete
+        placeholder="Search a location..."
         v-model="location"
         @update:search="searchLocations"
         :no-filter="true"
