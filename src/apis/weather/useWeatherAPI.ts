@@ -1,5 +1,5 @@
 import type {ComputedRef, Ref} from 'vue'
-import {computed, toValue} from 'vue'
+import {computed} from 'vue'
 import {useFetch} from '@/composables/useFetch'
 import type {WeatherAPILat, WeatherAPILon, WeatherAPIQuery, WeatherAPIResponse} from '@/apis/weather/WeatherAPITypes'
 import {HttpApi} from '@/apis/HttpApi'
@@ -9,9 +9,9 @@ const apikey = 'df11f2adaed1f4b4804da3a57704d9720cb5b067dabd2e6c1072e1d9'
 const httpApi = new HttpApi(window.location.origin)
 httpApi.setEndpoint(endpoint)
 
-export function useWeatherAPI(lonLat: ComputedRef<[WeatherAPILon, WeatherAPILat]|null>|Ref<[WeatherAPILon, WeatherAPILat]|null>) {
+export function useWeatherAPI(lonLat: ComputedRef<[WeatherAPILon, WeatherAPILat] | null> | Ref<[WeatherAPILon, WeatherAPILat] | null>) {
   const url = computed(() => {
-    if (lonLat.value === null){
+    if (lonLat.value === null) {
       return null
     }
 
@@ -21,7 +21,7 @@ export function useWeatherAPI(lonLat: ComputedRef<[WeatherAPILon, WeatherAPILat]
     return httpApi.getStringUrl()
   })
 
-  const { data, error } = useFetch<WeatherAPIResponse>(url)
+  const {data, error} = useFetch<WeatherAPIResponse>(url)
 
   return {
     data,
@@ -29,19 +29,20 @@ export function useWeatherAPI(lonLat: ComputedRef<[WeatherAPILon, WeatherAPILat]
   }
 }
 
-function buildWeatherQuery(lonLat: [WeatherAPILon, WeatherAPILat]): WeatherAPIQuery{
+function buildWeatherQuery(lonLat: [WeatherAPILon, WeatherAPILat]): WeatherAPIQuery {
   return {
     where: buildBboxParam(lonLat),
-    'order-by': 'forecast',
-    limit: '100',
+    order_by: 'forecast',
+    limit: '100'
     // apikey: apikey
   }
 }
-function buildBboxParam(lonLat: [WeatherAPILon, WeatherAPILat]){
+
+function buildBboxParam(lonLat: [WeatherAPILon, WeatherAPILat]) {
   const precision = 0.5
   const centerLon = lonLat[0]
   const centerLat = lonLat[1]
-  const cornerBottomLeft = [centerLon - precision/2, centerLat - precision/2]
-  const cornerUpRight = [centerLon + precision/2, centerLat + precision/2]
+  const cornerBottomLeft = [centerLon - precision / 2, centerLat - precision / 2]
+  const cornerUpRight = [centerLon + precision / 2, centerLat + precision / 2]
   return `in_bbox(position, ${cornerBottomLeft[1]}, ${cornerBottomLeft[0]}, ${cornerUpRight[1]}, ${cornerUpRight[0]})`
 }
