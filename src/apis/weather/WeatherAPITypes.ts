@@ -3,13 +3,11 @@ export type WeatherAPILon = number
 export type WeatherAPIDateISO = string
 export type WeatherTemperatureDegree = number
 
-export type WeatherAPIRequest = {
-  query: {
+export type WeatherAPIQuery = {
     where?: string
     "order-by"?: string
     limit?: string,
     apikey?: string
-  }
 }
 
 export type WeatherAPIResult = {

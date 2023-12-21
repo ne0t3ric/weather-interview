@@ -1,7 +1,7 @@
 import type {ComputedRef, Ref} from 'vue'
 import {computed, toValue} from 'vue'
 import {useFetch} from '@/composables/useFetch'
-import type {WeatherAPILat, WeatherAPILon, WeatherAPIRequest, WeatherAPIResponse} from '@/apis/weather/WeatherAPITypes'
+import type {WeatherAPILat, WeatherAPILon, WeatherAPIQuery, WeatherAPIResponse} from '@/apis/weather/WeatherAPITypes'
 import {HttpApi} from '@/apis/HttpApi'
 
 const endpoint = '/api/weather/'
@@ -29,7 +29,7 @@ export function useWeatherAPI(lonLat: ComputedRef<[WeatherAPILon, WeatherAPILat]
   }
 }
 
-function buildWeatherQuery(lonLat: [WeatherAPILon, WeatherAPILat]): WeatherAPIRequest['query']{
+function buildWeatherQuery(lonLat: [WeatherAPILon, WeatherAPILat]): WeatherAPIQuery{
   return {
     where: buildBboxParam(lonLat),
     'order-by': 'forecast',
