@@ -35,13 +35,13 @@ const location = computed({
   }
 })
 
-// The address entered by the client through the input
+// The search text entered by the client through the input
 const locationSearchText = ref('')
 const focus = ref(false)
+
 // Geocoding API
 const geocodingAPI = useGeocodingAPI(locationSearchText)
 const geocodingAPIResponse = geocodingAPI.data
-
 
 // Show list of compatible locations for given searchText
 const filteredLocations = computed(() => {
