@@ -1,13 +1,24 @@
 <template>
-  <input v-model="locationSearchText" type="text">
+  <div class="wrapper" style="min-width: 500px">
+    <v-autocomplete
+        v-model="location"
+        @update:search="searchLocations"
+        :no-filter="true"
+        :hide-no-data="true"
+        :items="filteredLocations"
+        item-title="label"
+        :return-object="true">
+    </v-autocomplete>
+  </div>
 </template>
 <script setup lang="ts">
-import {computed, ref, watch} from 'vue'
+import {computed, ref, watchEffect} from 'vue'
 import {useGeocodingAPI} from '@/apis/geocoding/useGeocodingAPI'
 import type {PointLocation} from '@/domain/PointLocation'
 
+
 const props = defineProps<{
-  modelValue: PointLocation|null
+  modelValue: PointLocation | null
 }>()
 const emits = defineEmits(['update:modelValue'])
 
@@ -15,7 +26,7 @@ const location = computed({
   get: () => {
     return props.modelValue
   },
-  set: (value: PointLocation|null) => {
+  set: (value: PointLocation | null) => {
     emits('update:modelValue', value)
   }
 })
@@ -26,30 +37,44 @@ const locationSearchText = ref('')
 const geocodingAPI = useGeocodingAPI(locationSearchText)
 const geocodingAPIResponse = geocodingAPI.data
 
-// Rule to define the defaultPoint when address changes. Default point = first entry of geocoding response
+
+// Show list of compatible locations for given searchText
+const filteredLocations = computed(() => {
+  return geocodingAPIResponse.value?.features.map(f => ({
+    label: f.properties.label,
+    lon: f.geometry.coordinates[0],
+    lat: f.geometry.coordinates[1]
+  })) || []
+})
+
+// Rule to define the defaultPoint when searchText changes. Default point = first entry of filteredLocations
 const defaultPoint = computed(() => {
-  if (!geocodingAPIResponse.value || geocodingAPIResponse.value.features.length === 0){
+  if (filteredLocations.value.length === 0) {
     console.log('No address found')
     return null
   }
 
-  return geocodingAPIResponse.value.features[0]
+  return filteredLocations.value[0]
 })
-// TODO: selectable point among list
-// Selected point by the client + derived props. For now it's just the defaultPoint
-const selectedPoint = computed(() => defaultPoint.value)
 
-// React to selectedPoint change
-watch(() => selectedPoint.value, () => {
-  if (!selectedPoint.value){
-    location.value = null
+function searchLocations(searchText: string) {
+  const emptySearch = searchText === ''
+  if (emptySearch) {
     return
   }
 
-  location.value = {
-    label: selectedPoint.value.properties.label || '',
-    lon: selectedPoint.value.geometry.coordinates[0],
-    lat: selectedPoint.value.geometry.coordinates[1],
+  const isDifferentSearch = location.value !== null ? location.value.label !== searchText : true
+  if (!isDifferentSearch) {
+    return
+  }
+
+  locationSearchText.value = searchText
+}
+
+// React to selectedPoint change
+watchEffect(() => {
+  if (locationSearchText.value) {
+    location.value = defaultPoint.value
   }
 })
 </script>
