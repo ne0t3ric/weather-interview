@@ -4,6 +4,11 @@
       <v-container class="app-container d-flex flex-column" :fluid="true">
         <v-row class='flex-grow-0' no-gutters>
           <v-col>
+            <LocationsSuggestion v-model="location"></LocationsSuggestion>
+          </v-col>
+        </v-row>
+        <v-row class='flex-grow-0' no-gutters>
+          <v-col>
             <LocationSelect v-model="location"></LocationSelect>
           </v-col>
         </v-row>
@@ -27,6 +32,7 @@ import {ref} from 'vue'
 import type {PointLocation} from '@/domain/PointLocation'
 import LocationSelect from '@/components/LocationSelect.vue'
 import WeatherPanel from '@/components/weather-panel/WeatherPanel.vue'
+import LocationsSuggestion from '@/components/LocationsSuggestion.vue'
 
 const location = ref<PointLocation | null>(null)
 

@@ -6,6 +6,7 @@ export type GeocodingAPIFeaturePoint = {
     coordinates: [GeocodingAPILon, GeocodingAPILat]
   },
   properties: {
+    id: number
     label: string
   }
 }
