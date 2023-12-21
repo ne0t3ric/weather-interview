@@ -26,6 +26,7 @@ export function useFetch<T = unknown>(url: ComputedRef<string | null> | Ref<stri
     } else {
       data.value = null
       error.value = null
+      loading.value = false
     }
   }
 
