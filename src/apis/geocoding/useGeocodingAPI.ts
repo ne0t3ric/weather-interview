@@ -11,6 +11,9 @@ httpApi.setEndpoint(endpoint)
 
 export function useGeocodingAPI(searchText: ComputedRef<string> | Ref<string>) {
   const url = computed(() => {
+    if ('' === searchText.value) {
+      return null
+    }
     const query = buildGeocodingQuery(searchText.value)
     httpApi.setQuery(query)
 
