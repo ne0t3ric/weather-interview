@@ -2,7 +2,9 @@
   <div class="wrapper" style="min-width: 500px">
     <v-autocomplete
         placeholder="Search a location..."
+        :auto-select-first="true"
         v-model="location"
+        v-model:focused="focus"
         @update:search="searchLocations"
         :no-filter="true"
         :hide-no-data="true"
@@ -23,6 +25,7 @@ const props = defineProps<{
 }>()
 const emits = defineEmits(['update:modelValue'])
 
+// proxy v-model
 const location = computed({
   get: () => {
     return props.modelValue
@@ -31,9 +34,10 @@ const location = computed({
     emits('update:modelValue', value)
   }
 })
+
 // The address entered by the client through the input
 const locationSearchText = ref('')
-
+const focus = ref(false)
 // Geocoding API
 const geocodingAPI = useGeocodingAPI(locationSearchText)
 const geocodingAPIResponse = geocodingAPI.data
@@ -59,23 +63,22 @@ const defaultPoint = computed(() => {
 })
 
 function searchLocations(searchText: string) {
-  const emptySearch = searchText === ''
-  if (emptySearch) {
+  // Prevent research if search = current location. Happens when focus on vuetify autocomplete that has already a value
+  const isDifferentSearch = location.value !== null ? location.value.label !== searchText : true
+  if (!isDifferentSearch) {
     return
   }
 
-  const isDifferentSearch = location.value !== null ? location.value.label !== searchText : true
-  if (!isDifferentSearch) {
+  // Prevent input to be deleted on unfocus
+  if (searchText === '' && location.value !== null && !focus.value) {
     return
   }
 
   locationSearchText.value = searchText
 }
 
-// React to selectedPoint change
+// React to locationSearchText change
 watchEffect(() => {
-  if (locationSearchText.value) {
-    location.value = defaultPoint.value
-  }
+  location.value = defaultPoint.value
 })
 </script>
