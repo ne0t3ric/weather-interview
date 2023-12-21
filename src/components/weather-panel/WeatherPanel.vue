@@ -6,7 +6,7 @@
     <!--    <template #loader="{props}">-->
     <!--      <v-skeleton-loader type="card"></v-skeleton-loader>-->
     <!--    </template>-->
-    <v-card-item title="Weather forecast for the newt days">
+    <v-card-item title="Weather forecast for the next days">
       <template v-slot:subtitle>
         <v-icon
             icon="mdi-alert"
