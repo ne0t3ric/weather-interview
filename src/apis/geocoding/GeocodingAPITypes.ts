@@ -1,6 +1,6 @@
 export type GeocodingAPILon = number
 export type GeocodingAPILat = number
-export type GeocodingAPIFeature = {
+export type GeocodingAPIFeaturePoint = {
   geometry: {
     type: 'Point',
     coordinates: [GeocodingAPILon, GeocodingAPILat]
@@ -8,8 +8,8 @@ export type GeocodingAPIFeature = {
   property: {
     label: string
   }
-
 }
-export type GeocodingAPIResult = {
-  features: GeocodingAPIFeature[]
+
+export type GeocodingAPIResponse = {
+  features: GeocodingAPIFeaturePoint[]
 }
