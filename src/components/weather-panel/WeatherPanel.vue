@@ -1,7 +1,11 @@
 <template>
   <v-card
-      class="mx-auto"
+      class="mx-auto panel fill-height"
+      :loading="loading"
   >
+    <!--    <template #loader="{props}">-->
+    <!--      <v-skeleton-loader type="card"></v-skeleton-loader>-->
+    <!--    </template>-->
     <v-card-item title="Weather forecast for the newt days">
       <template v-slot:subtitle>
         <v-icon
@@ -46,7 +50,7 @@ const locationLonLat = computed(() => {
   return [location.value.lon, location.value.lat] as [number, number]
 })
 
-const {data} = useWeatherAPI(locationLonLat)
+const {data, loading} = useWeatherAPI(locationLonLat)
 
 // Reformat weather data to provide to panel
 const forecasts = computed(() => {
@@ -84,3 +88,8 @@ function formatDay(day: string) {
 
 
 </script>
+<style scoped>
+.panel {
+  background-color: rgba(255, 255, 255, 0.15)
+}
+</style>

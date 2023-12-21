@@ -35,7 +35,7 @@ function formatTemperature(value: number) {
 </script>
 <style scoped>
 table {
-  border: 1px solid #dededf;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   height: 100%;
   width: 100%;
   table-layout: fixed;
@@ -45,14 +45,16 @@ table {
 }
 
 th {
-  border: 1px solid #dededf;
-  background-color: #eceff1;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.2);
   color: #000000;
   padding: 5px;
   text-align: center;
 }
 
 td {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 5px;
   text-align: center;
 }
 </style>
