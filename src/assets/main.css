@@ -1,0 +1,4 @@
+/* Hack because of vuetify issue : https://github.com/vuetifyjs/vuetify/issues/1197*/
+html {
+    overflow: auto !important;
+}
