@@ -9,7 +9,7 @@ const httpApi = new HttpApi(window.location.origin)
 httpApi.setEndpoint(endpoint)
 
 
-export function useGeocodingAPI(searchText: ComputedRef<string>|Ref<string>) {
+export function useGeocodingAPI(searchText: ComputedRef<string> | Ref<string>) {
   const url = computed(() => {
     const query = buildGeocodingQuery(searchText.value)
     httpApi.setQuery(query)
@@ -17,15 +17,16 @@ export function useGeocodingAPI(searchText: ComputedRef<string>|Ref<string>) {
     return httpApi.getStringUrl()
   })
 
-  const { data, error } = useFetch<GeocodingAPIResponse>(url)
+  const {data, error, loading} = useFetch<GeocodingAPIResponse>(url)
 
   return {
     data,
-    error
+    error,
+    loading
   }
 }
 
-function buildGeocodingQuery(searchText: string): GeocodingAPIQuery{
+function buildGeocodingQuery(searchText: string): GeocodingAPIQuery {
   return {
     text: searchText
   }

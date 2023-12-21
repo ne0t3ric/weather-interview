@@ -21,11 +21,12 @@ export function useWeatherAPI(lonLat: ComputedRef<[WeatherAPILon, WeatherAPILat]
     return httpApi.getStringUrl()
   })
 
-  const {data, error} = useFetch<WeatherAPIResponse>(url)
+  const {data, error, loading} = useFetch<WeatherAPIResponse>(url)
 
   return {
     data,
-    error
+    error,
+    loading
   }
 }
 
