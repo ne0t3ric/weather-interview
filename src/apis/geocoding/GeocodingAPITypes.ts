@@ -5,9 +5,13 @@ export type GeocodingAPIFeaturePoint = {
     type: 'Point',
     coordinates: [GeocodingAPILon, GeocodingAPILat]
   },
-  property: {
+  properties: {
     label: string
   }
+}
+
+export type GeocodingAPIQuery = {
+  text: string
 }
 
 export type GeocodingAPIResponse = {
