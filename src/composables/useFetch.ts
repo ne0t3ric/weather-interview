@@ -1,17 +1,25 @@
 import {ref, watchEffect, toValue, type ComputedRef, type Ref} from 'vue'
 
-export function useFetch<T = unknown>(url: ComputedRef<string> | Ref<string>) {
+export function useFetch<T = unknown>(url: ComputedRef<string|null> | Ref<string|null>) {
   const data = ref<T|null>(null)
   const error = ref(null)
 
   const fetchData = () => {
-    data.value = null
-    error.value = null
-
-    fetch(toValue(url))
-      .then((res) => res.json())
-      .then((json) => (data.value = json))
-      .catch((err) => (error.value = err))
+    if (url.value !== null){
+      fetch(url.value)
+        .then((res) => res.json())
+        .then((json) => {
+          data.value = json
+          error.value = null
+        })
+        .catch((err) => {
+          data.value = null
+          error.value = err
+        })
+    } else {
+      data.value = null
+      error.value = null
+    }
   }
 
   watchEffect(() => {
