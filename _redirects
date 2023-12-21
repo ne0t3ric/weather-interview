@@ -1,2 +1,3 @@
 /api/geocoding/*  http://pelias.smappen.com:4000/v1/search:splat  200
+/api/weather/* https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/arpege-05-sp1_sp2/records:splat 200
 /* /index.html  200
