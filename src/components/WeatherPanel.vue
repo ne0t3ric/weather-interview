@@ -3,9 +3,6 @@
       class="mx-auto panel fill-height"
       :loading="loading"
   >
-    <!--    <template #loader="{props}">-->
-    <!--      <v-skeleton-loader type="card"></v-skeleton-loader>-->
-    <!--    </template>-->
     <v-card-item title="Weather forecast for the next days">
       <template v-slot:subtitle>
         <v-icon
@@ -15,7 +12,7 @@
             class="me-1 pb-1"
         ></v-icon>
 
-        {{ location?.label }}
+        {{ location?.label || 'No selected location' }}
       </template>
     </v-card-item>
     <v-list-item
@@ -32,7 +29,7 @@ import {computed, toRefs} from 'vue'
 import {useWeatherAPI} from '@/apis/weather/useWeatherAPI'
 import type {PointLocation} from '@/domain/PointLocation'
 import type {WeatherForecast} from '@/domain/WeatherForecast'
-import WeatherTable from '@/components/weather-panel/WeatherTable.vue'
+import WeatherTable from '@/components/WeatherTable.vue'
 
 const props = defineProps<{
   location: PointLocation | null
@@ -83,8 +80,6 @@ function formatDay(day: string) {
   const formattedDay = new Date(day).toLocaleString('en-us', {day: '2-digit'})
   return `${formattedWeekday} ${formattedDay}`
 }
-
-
 </script>
 <style scoped>
 .panel {

@@ -44,18 +44,14 @@ table {
   text-align: left;
 }
 
-th {
+th, td {
   border: 1px solid rgba(255, 255, 255, 0.2);
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #000000;
   padding: 5px;
   text-align: center;
 }
 
-td {
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 5px;
-  text-align: center;
+th {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .temperature, .date {

@@ -1,8 +1,8 @@
 <template>
-  <TheLayout></TheLayout>
+  <v-app>
+    <TheMain></TheMain>
+  </v-app>
 </template>
 <script setup lang="ts">
-import TheLayout from '@/components/TheLayout.vue'
+import TheMain from '@/layout/TheMain.vue'
 </script>
-<style scoped>
-</style>
