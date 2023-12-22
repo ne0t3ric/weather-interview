@@ -1,37 +1,56 @@
-import {type ComputedRef, ref, type Ref, watchEffect} from 'vue'
+import {type ComputedRef, ref, type Ref, type UnwrapRef, watchEffect} from 'vue'
 
 export function useFetch<T = unknown>(url: ComputedRef<string | null> | Ref<string | null>) {
   const data = ref<T | null>(null)
-  const error = ref(null)
+  const error = ref<unknown>(null)
   const loading = ref(false)
   let controller: AbortController | null = null;
 
-  const fetchData = () => {
+  function fetchData() {
     if (url.value !== null) {
-      controller = new AbortController();
-      const signal = controller.signal
+      const signal = prepareCurrentFetch()
+
       loading.value = true
+
       fetch(url.value, {signal: signal})
         .then((res) => res.json())
-        .then((json) => {
-          data.value = json
-          error.value = null
-          loading.value = false
-        })
-        .catch((err) => {
-          data.value = null
-          error.value = err
-          loading.value = false
-        })
+        .then(onFetchSuccess)
+        .catch(onFetchError)
     } else {
-      data.value = null
-      error.value = null
-      loading.value = false
+      resetState()
     }
   }
 
-  watchEffect(() => {
+  function onFetchSuccess(json: UnwrapRef<T>) {
+    data.value = json
+    error.value = null
+    loading.value = false
+  }
+
+  function onFetchError(err: unknown) {
+    error.value = err
+    resetState()
+  }
+
+  function resetState() {
+    data.value = null
+    loading.value = false
+  }
+
+  function prepareCurrentFetch() {
+    controller = new AbortController();
+    const signal = controller.signal
+
+    return signal
+  }
+
+  function cancelCurrentFetch(controller: AbortController | null) {
     controller?.abort()
+  }
+
+
+  watchEffect(() => {
+    cancelCurrentFetch(controller)
     fetchData()
   })
 
