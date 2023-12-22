@@ -2,9 +2,23 @@
 
 Display 5 days forecast based in user input via geocoding search. Using opendatasoft arpege weather data.
 
+## Stack
+
+- SPA Framework : Vue.js
+- Design system : Vuetify
+- Language: Typescript
+- Linter: Eslint
+- Deploy: Netlify
+- Build & dev tool: Vite
+
 ## Project Setup
 
-Install NVM first then :
+Pre-requisites :
+
+- Install NVM
+- Install Netlify-cli
+
+Install packages
 
 ```sh
 nvm use
@@ -19,8 +33,7 @@ SPA only :
 npm run dev
 ```
 
-With proxy/redirect apis =>
-Install netlify-cli first then
+With proxy/redirect apis, use netlify wrapper
 
 ```sh
 netlify dev
@@ -37,3 +50,9 @@ npm run build
 ```sh
 npm run lint
 ```
+
+## Deploy
+
+See @netlify
+
+Deploy url : https://weather-interview.netlify.app
